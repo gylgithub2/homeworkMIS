@@ -9,6 +9,8 @@ import model.Teacher;
  * @authorEmail 1076030424@qq.com
  */
 public interface TeacherDao {
+	public List<Teacher> queryPageTeachers(Integer rows, Integer page, String dimText);
+	public Teacher login(String teacherName, String teacherPassword);
 	public int insert(Teacher teacher);
 	public int delete(int id);
 	public int update(Teacher teacher);

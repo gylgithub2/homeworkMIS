@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app id="WebApp_ID" version="3.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+	<filter>
+		<filter-name>PageListenner</filter-name>
+		<filter-class>webutils.PageListenner</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>PageListenner</filter-name>
+		<url-pattern>/admin.jsp</url-pattern>
+		<url-pattern>/admin-manager.jsp</url-pattern>
+		<url-pattern>/class-manager.jsp</url-pattern>
+		<url-pattern>/leaveMSG-manager.jsp</url-pattern>
+		<url-pattern>/materials-manager.jsp</url-pattern>
+		<url-pattern>/myhomework-manager.jsp</url-pattern>
+		<url-pattern>/notice-manager.jsp</url-pattern>
+		<url-pattern>/student.jsp</url-pattern>
+		<url-pattern>/student-manager.jsp</url-pattern>
+		<url-pattern>/stuHomework-manager.jsp</url-pattern>
+		<url-pattern>/teacher.jsp</url-pattern>
+		<url-pattern>/teacher-manager.jsp</url-pattern>
+	</filter-mapping>
+
 </web-app>

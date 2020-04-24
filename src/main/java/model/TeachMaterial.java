@@ -2,18 +2,25 @@ package model;
 
 import java.util.Date;
 
+
+
 /**
- * @Decription
+ * @Decription 教学材料ORM映射
  * @authorEmail 1076030424@qq.com
  */
 public class TeachMaterial {
 
 	private int id;
+	//标题
 	private String headline;
+	//内容
 	private String materialContent;
-	private String materrialPath;
+	//文件地址
+	private String materialPath;
+	//文件名
 	private String materialName;
-	private Date upDate;
+	//上传时间
+	private Date uploadDate;
 	public int getId() {
 		return id;
 	}
@@ -33,10 +40,10 @@ public class TeachMaterial {
 		this.materialContent = materialContent;
 	}
 	public String getMaterrialPath() {
-		return materrialPath;
+		return materialPath;
 	}
-	public void setMaterrialPath(String materrialPath) {
-		this.materrialPath = materrialPath;
+	public void setMaterialPath(String materialPath) {
+		this.materialPath = materialPath;
 	}
 	public String getMaterialName() {
 		return materialName;
@@ -44,10 +51,11 @@ public class TeachMaterial {
 	public void setMaterialName(String materialName) {
 		this.materialName = materialName;
 	}
-	public Date getUpDate() {
-		return upDate;
+	public Date getUploadDate() {
+		return uploadDate;
 	}
-	public void setUpDate(Date upDate) {
-		this.upDate = upDate;
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
+	
 }

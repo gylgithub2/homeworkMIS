@@ -1,7 +1,7 @@
 package model;
 
 /**
- * @Decription
+ * @Decription 教师表ORM映射
  * @authorEmail 1076030424@qq.com
  */
 public class Teacher {

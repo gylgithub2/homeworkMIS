@@ -49,9 +49,44 @@ public class TeacherDaoimpl extends BaseDao<Teacher> implements TeacherDao {
 	@Override
 	public Teacher queryOne(int id) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `teacher_pk_id` id,`teacher_name` teacherName,`teacher_password` teacherPassword,`teacher_sex` sex,`teacher_age` age FROM `tb_teacher` where `teacher_pk_id` = ?";
+		String sql = "SELECT `teacher_pk_id` id,"
+				+ "`teacher_name` teacherName,"
+				+ "`teacher_password` teacherPassword,"
+				+ "`teacher_sex` sex,`teacher_age` age "
+				+ "FROM `tb_teacher` where `teacher_pk_id` = ?";
 		return super.queryOne(connect, sql, id);
 
+	}
+
+	@Override
+	public Teacher login(String teacherName, String teacherPassword) {
+		Connection connect = JDBCUtils.getConnection();
+		String sql = "SELECT `teacher_pk_id` id,"
+				+ "`teacher_name` teacherName,"
+				+ "`teacher_password` teacherPassword,"
+				+ "`teacher_sex` sex,`teacher_age` age "
+				+ "FROM `tb_teacher` WHERE `teacher_name`= ? AND `teacher_password`=?";
+		return login(connect, sql,teacherName,teacherPassword);
+	}
+
+	@Override
+	public List<Teacher> queryPageTeachers(Integer rows, Integer page, String dimText) {
+		Connection connect = JDBCUtils.getConnection();
+		String sql = "SELECT `teacher_pk_id` id,"
+				+ "`teacher_name` teacherName,"
+				+ "`teacher_password` teacherPassword,"
+				+ "`teacher_sex` sex,`teacher_age` age "
+				+ "FROM `tb_teacher`";
+		int startIndex = (page-1)*rows;
+		StringBuffer str= new StringBuffer();
+		str.append(sql);
+		if(dimText == null) {
+			str.append("LIMIT ?,?");
+		return queryPage(connect,str.toString(),startIndex,rows);
+	}else{
+		str.append("WHERE `teacher_name` LIKE ? LIMIT ?,?");
+		return queryPage(connect,str.toString(),"%"+dimText+"%",startIndex,rows);
+	}
 	}
 
 }

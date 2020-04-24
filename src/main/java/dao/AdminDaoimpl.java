@@ -36,14 +36,51 @@ public class AdminDaoimpl extends BaseDao<Admin> implements AdminDao {
 	@Override
 	public List<Admin> queryAll() {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `admin_pk_id` id,`admin_name` adminName,`admin_password` adminPassword FROM `tb_admin`";
+		String sql = "SELECT `admin_pk_id` "
+				+ "id,`admin_name` adminName,"
+				+ "`admin_password` adminPassword "
+				+ "FROM `tb_admin`";
 		return queryAll(connect,sql);
 	}
 	@Override
 	public Admin queryOne(int id) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `admin_pk_id` id,`admin_name` adminName,`admin_password` adminPassword FROM `tb_admin` where `admin_pk_id` = ?";
+		String sql = "SELECT `admin_pk_id` id,"
+				+ "`admin_name` adminName,"
+				+ "`admin_password` adminPassword "
+				+ "FROM `tb_admin` where `admin_pk_id` = ?";
 		return super.queryOne(connect, sql,id);
 	}
+
+	@Override
+	public Admin login(String adminName, String adminPassword) {
+		Connection connect = JDBCUtils.getConnection();
+		String sql =  "SELECT `admin_pk_id` id,"
+				+ "`admin_name` adminName,"
+				+ "`admin_password` adminPassword "
+				+ "FROM `tb_admin` where `admin_name`=? "
+				+ "AND `admin_password` = ?";
+		return login(connect,sql,adminName,adminPassword);
+	}
+
+	@Override
+	public List<Admin> queryPageAdmins(Integer rows, Integer page, String dimText) {
+		Connection connect = JDBCUtils.getConnection();
+		String sql = "SELECT `admin_pk_id` id,"
+				+ "`admin_name` adminName,"
+				+ "`admin_password` adminPassword "
+				+ "FROM `tb_admin`";
+		int startIndex = (page-1)*rows;
+		StringBuffer str= new StringBuffer();
+		str.append(sql);
+		if(dimText == null) {
+			str.append("LIMIT ?,?");
+		return queryPage(connect,str.toString(),startIndex,rows);
+	}else{
+		str.append("WHERE `admin_name` LIKE ? LIMIT ?,?");
+		return queryPage(connect,str.toString(),"%"+dimText+"%",startIndex,rows);
+	}
+	}
+
 
 }

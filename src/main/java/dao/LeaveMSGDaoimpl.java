@@ -15,8 +15,8 @@ public class LeaveMSGDaoimpl extends BaseDao<LeaveMSG> implements LeaveMSGDao {
 	@Override
 	public int insert(LeaveMSG leaveMSG) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "INSERT INTO `tb_leavemsg`(`leaveMSG_pk_id`,`msg_content`,`update`) VALUES(?,?,?)";
-		return update(connect,sql,leaveMSG.getId(),leaveMSG.getMsgContent(),leaveMSG.getUpDate());
+		String sql = "INSERT INTO `tb_leavemsg`(`leaveMSG_pk_id`,`user`,`headline`,`msg_content`,`update`) VALUES(?,?,?,?,?)";
+		return update(connect,sql,leaveMSG.getId(),leaveMSG.getUser(),leaveMSG.getHeadline(),leaveMSG.getMsgContent(),leaveMSG.getUploadDate());
 	}
 
 	@Override
@@ -30,14 +30,14 @@ public class LeaveMSGDaoimpl extends BaseDao<LeaveMSG> implements LeaveMSGDao {
 	@Override
 	public int update(LeaveMSG leaveMSG) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "UPDATE  `tb_leavemsg` SET `msg_content` = ?,`update` = ? WHERE `leaveMSG_pk_id` = ?";
-		return update(connect,sql,leaveMSG.getMsgContent(),leaveMSG.getUpDate(),leaveMSG.getId());
+		String sql = "UPDATE  `tb_leavemsg` SET `msg_content` = ?,`user`=?,`headline`=?,`update` = ? WHERE `leaveMSG_pk_id` = ?";
+		return update(connect,sql,leaveMSG.getMsgContent(),leaveMSG.getUser(),leaveMSG.getHeadline(),leaveMSG.getUploadDate(),leaveMSG.getId());
 	}
 
 	@Override
 	public List<LeaveMSG> queryAll() {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `leaveMSG_pk_id` id,`msg_content` msgContent,`update` upDate"
+		String sql = "SELECT `leaveMSG_pk_id` id,`user`,`headline`,`msg_content` msgContent,`update` uploadDate"
 				+ " FROM `tb_leavemsg`";
 		return queryAll(connect,sql);
 	
@@ -46,9 +46,18 @@ public class LeaveMSGDaoimpl extends BaseDao<LeaveMSG> implements LeaveMSGDao {
 	@Override
 	public LeaveMSG queryOne(int id) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `leaveMSG_pk_id` id,`msg_content` msgContent,`update` upDate"
+		String sql = "SELECT `leaveMSG_pk_id` id,`user`,`headline`,`msg_content` msgContent,`update` uploadDate"
 				+ " FROM `tb_leavemsg` where `leaveMSG_pk_id` = ?";
 		return queryOne(connect,sql,id);
+	}
+
+	@Override
+	public List<LeaveMSG> queryPageLeaveMSGs(Integer rows, Integer page) {
+		Connection connect = JDBCUtils.getConnection();
+		int startIndex = (page-1)*rows;
+		String sql = "SELECT `leaveMSG_pk_id` id,`user`,`headline`,`msg_content` msgContent,`update` uploadDate"
+				+ " FROM `tb_leavemsg` LIMIT ?,?";
+		return queryPage(connect,sql,startIndex,rows);
 	}
 
 }

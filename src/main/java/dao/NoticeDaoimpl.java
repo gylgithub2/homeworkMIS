@@ -16,7 +16,7 @@ public class NoticeDaoimpl  extends BaseDao<Notice> implements NoticeDao{
 	public int insert(Notice notice) {
 		Connection connect = JDBCUtils.getConnection();
 		String sql = "INSERT INTO `tb_notice`(`notice_pk_id`,`headline`,`notice_content`,`update`) VALUES(?,?,?,?)";
-		return update(connect,sql,notice.getId(),notice.getHeadline(),notice.getNoticeContent(),notice.getUpDate());
+		return update(connect,sql,notice.getId(),notice.getHeadline(),notice.getNoticeContent(),notice.getUploadDate());
 	
 	}
 
@@ -32,14 +32,14 @@ public class NoticeDaoimpl  extends BaseDao<Notice> implements NoticeDao{
 	public int update(Notice notice) {
 		Connection connect = JDBCUtils.getConnection();
 		String sql = "UPDATE  `tb_notice` SET `headline` = ?,`notice_content` = ?,`update` = ? WHERE `notice_pk_id` = ?";
-		return update(connect,sql,notice.getHeadline(),notice.getNoticeContent(),notice.getUpDate(),notice.getId());
+		return update(connect,sql,notice.getHeadline(),notice.getNoticeContent(),notice.getUploadDate(),notice.getId());
 	
 	}
 
 	@Override
 	public List<Notice> queryAll() {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `notice_pk_id` id,`headline` headline,`notice_content` noticeContent,`update` upDate "
+		String sql = "SELECT `notice_pk_id` id,`headline` headline,`notice_content` noticeContent,`update` uploadDate "
 				+ " FROM `tb_notice`";
 		return queryAll(connect,sql);
 	
@@ -48,9 +48,22 @@ public class NoticeDaoimpl  extends BaseDao<Notice> implements NoticeDao{
 	@Override
 	public Notice queryOne(int id) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `notice_pk_id` id,`headline` headline,`notice_content` noticeContent,`update` upDate "
+		String sql = "SELECT `notice_pk_id` id,"
+				+ "`headline` headline,"
+				+ "`notice_content` noticeContent,`update` uploadDate "
 				+ " FROM `tb_notice` where `notice_pk_id` = ?";
 		return queryOne(connect,sql,id);
+	}
+
+	@Override
+	public List<Notice> queryPageNotices(Integer rows, Integer page) {
+		Connection connect = JDBCUtils.getConnection();
+		int startIndex = (page-1)*rows;
+		String sql = "SELECT `notice_pk_id` id,"
+				+ "`headline` headline,"
+				+ "`notice_content` noticeContent,`update` uploadDate "
+				+ " FROM `tb_notice` LIMIT ?,?";
+		return queryPage(connect,sql,startIndex,rows);
 	}
 
 }

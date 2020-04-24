@@ -1,7 +1,7 @@
 package model;
 
 /**
- * @Decription
+ * @Decription 学生表ORM映射
  * @authorEmail 1076030424@qq.com
  */
 public class Student {
@@ -39,16 +39,16 @@ public class Student {
 	public void setStudentPassword(String studentPassword) {
 		this.studentPassword = studentPassword;
 	}
-	public int getSex() {
+	public Integer getSex() {
 		return sex;
 	}
-	public void setSex(int sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 	public Integer getStudentClass() {

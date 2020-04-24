@@ -18,7 +18,7 @@ public class HomeworkCmitDaoimpl extends BaseDao<HomeworkCmit> implements Homewo
 		String sql = "INSERT INTO `tb_homewkcmit`(`cmit_pk_id`,`homework_name`,`file_path`"
 				+ ",`file_name`,`up_date`,`student`,`read_advice`,`teacher`,`read_date`) VALUES(?,?,?,?,?,?,?,?,?)";
 		return update(connect,sql,homeworkCmit.getId(),homeworkCmit.getHomeworkName(),
-				homeworkCmit.getFilePath(),homeworkCmit.getFileName(),homeworkCmit.getUpDate()
+				homeworkCmit.getFilePath(),homeworkCmit.getFileName(),homeworkCmit.getUploadDate()
 				,homeworkCmit.getStudent(),homeworkCmit.getReadAdvice(),homeworkCmit.getTeacher(),homeworkCmit.getReadDate());
 
 	}
@@ -37,7 +37,7 @@ public class HomeworkCmitDaoimpl extends BaseDao<HomeworkCmit> implements Homewo
 		String sql = "UPDATE  `tb_homewkcmit` SET `homework_name` = ?,`file_path` = ? ,`file_name` = ?,`up_date` = ?,`student` = ?"
 				+ ",`read_advice` = ?,`teacher` = ?,`read_date` = ? WHERE `cmit_pk_id` = ?";
 		return update(connect,sql,homeworkCmit.getHomeworkName(),
-				homeworkCmit.getFilePath(),homeworkCmit.getFileName(),homeworkCmit.getUpDate()
+				homeworkCmit.getFilePath(),homeworkCmit.getFileName(),homeworkCmit.getUploadDate()
 				,homeworkCmit.getStudent(),homeworkCmit.getReadAdvice(),homeworkCmit.getTeacher(),
 				homeworkCmit.getReadDate(),homeworkCmit.getId());
 
@@ -50,7 +50,7 @@ public class HomeworkCmitDaoimpl extends BaseDao<HomeworkCmit> implements Homewo
 				+ "`homework_name` homeworkName,"
 				+ "`file_path` filePath,"
 				+ "`file_name` fileName,"
-				+ "`up_date` upDate,"
+				+ "`up_date` uploadDate,"
 				+ "`student` student,"
 				+ "`read_advice` readAdvice,"
 				+ "`teacher` teacher,"
@@ -67,7 +67,7 @@ public class HomeworkCmitDaoimpl extends BaseDao<HomeworkCmit> implements Homewo
 				+ "`homework_name` homeworkName,"
 				+ "`file_path` filePath,"
 				+ "`file_name` fileName,"
-				+ "`up_date` upDate,"
+				+ "`up_date` uploadDate,"
 				+ "`student` student,"
 				+ "`read_advice` readAdvice,"
 				+ "`teacher` teacher,"
@@ -76,4 +76,54 @@ public class HomeworkCmitDaoimpl extends BaseDao<HomeworkCmit> implements Homewo
 		return queryOne(connect, sql,id);
 	}
 
+	@Override
+	public List<HomeworkCmit> queryPageHomeworkCmits(Integer rows, Integer page) {
+		Connection connect = JDBCUtils.getConnection();
+		int startIndex = (page-1)*rows;
+		String sql = "SELECT `cmit_pk_id` id,"
+				+ "`homework_name` homeworkName,"
+				+ "`file_path` filePath,"
+				+ "`file_name` fileName,"
+				+ "`up_date` uploadDate,"
+				+ "`student` student,"
+				+ "`read_advice` readAdvice,"
+				+ "`teacher` teacher,"
+				+ "`read_date` readDate"
+				+ " FROM `tb_homewkcmit` LIMIT ?,?";
+		return queryPage(connect,sql,startIndex,rows);
+	}
+
+	@Override
+	public List<HomeworkCmit> queryPageStuHomeworkCmits(int rows, Integer page, Integer studentId) {
+		// TODO Auto-generated method stub
+		Connection connect = JDBCUtils.getConnection();
+		int startIndex = (page-1)*rows;
+		String sql = "SELECT `cmit_pk_id` id,"
+				+ "`homework_name` homeworkName,"
+				+ "`file_path` filePath,"
+				+ "`file_name` fileName,"
+				+ "`up_date` uploadDate,"
+				+ "`student` student,"
+				+ "`read_advice` readAdvice,"
+				+ "`teacher` teacher,"
+				+ "`read_date` readDate"
+				+ " FROM `tb_homewkcmit` where `student` = ? LIMIT ?,?";
+		return queryPage(connect,sql,studentId,startIndex,rows);
+	}
+
+	@Override
+	public List<HomeworkCmit> queryStuSelfAll(int studentId) {
+		Connection connect = JDBCUtils.getConnection();
+		String sql = "SELECT `cmit_pk_id` id,"
+				+ "`homework_name` homeworkName,"
+				+ "`file_path` filePath,"
+				+ "`file_name` fileName,"
+				+ "`up_date` uploadDate,"
+				+ "`student` student,"
+				+ "`read_advice` readAdvice,"
+				+ "`teacher` teacher,"
+				+ "`read_date` readDate"
+				+ " FROM `tb_homewkcmit` where `student` = ?";
+		return queryAll(connect,sql,studentId);
+	}
 }

@@ -3,14 +3,17 @@ package model;
 import java.util.Date;
 
 /**
- * @Decription
+ * @Decription 公告信息ORM映射
  * @authorEmail 1076030424@qq.com
  */
 public class Notice {
 	private Integer id;
+	//标题
 	private String headline;
+	//内容
 	private String noticeContent;
-	private Date upDate;
+	//上传时间
+	private Date uploadDate;
 	public Integer getId() {
 		return id;
 	}
@@ -29,10 +32,11 @@ public class Notice {
 	public void setNoticeContent(String noticeContent) {
 		this.noticeContent = noticeContent;
 	}
-	public Date getUpDate() {
-		return upDate;
+	public Date getUploadDate() {
+		return uploadDate;
 	}
-	public void setUpDate(Date upDate) {
-		this.upDate = upDate;
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
+	
 }

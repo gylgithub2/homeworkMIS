@@ -9,6 +9,7 @@ import model.HomeworkSet;
  * @authorEmail 1076030424@qq.com
  */
 public interface HomeworkSetDao {
+	public List<HomeworkSet> queryPageHomeworkSets(Integer rows, Integer page);
 	public int insert(HomeworkSet Homeworkset);
 	public int delete(int id);
 	public int update(HomeworkSet Homeworkset);

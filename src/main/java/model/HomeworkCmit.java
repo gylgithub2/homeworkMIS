@@ -3,18 +3,26 @@ package model;
 import java.util.Date;
 
 /**
- * @Decription
+ * @Decription 学生提交作业记录ORM映射
  * @authorEmail 1076030424@qq.com
  */
 public class HomeworkCmit {
 	private Integer id;
+	//作业名字
 	private String homeworkName;
+	//上传文件地址
 	private String filePath;
+	//文件名
 	private String fileName;
-	private Date upDate;
+	//上传时间
+	private Date uploadDate;
+	//上传学生
 	private Integer student;
+	//评阅信息
 	private String readAdvice;
+	//老师
 	private Integer teacher;
+	//读日期
 	private Date readDate;
 	public Integer getId() {
 		return id;
@@ -40,12 +48,7 @@ public class HomeworkCmit {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public Date getUpDate() {
-		return upDate;
-	}
-	public void setUpDate(Date upDate) {
-		this.upDate = upDate;
-	}
+	
 	public Integer getStudent() {
 		return student;
 	}
@@ -69,5 +72,11 @@ public class HomeworkCmit {
 	}
 	public void setReadDate(Date readDate) {
 		this.readDate = readDate;
+	}
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
 }

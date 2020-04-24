@@ -1,7 +1,7 @@
 package utils;
 
 /**
- * @Decription 工具类,jdbc数据库连接以及基础处理sql语句增删改查
+ * @Decription 工具类,jdbc数据库连接以及基础处理sal语句增删改查
  */
 
 import java.io.IOException;
@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -142,11 +141,7 @@ public class JDBCUtils {
 					String fieldName = metaData.getColumnLabel(i + 1);// 获取指定列的列名
 					Field field = clazz.getDeclaredField(fieldName);// 通过列名(与属性名不同,需在sql语句中加别名)反射获取传入类的对应属性,并赋值
 					field.setAccessible(true);
-					if (obj instanceof Timestamp) {
-						field.set(t, obj.toString());
-					} else {
-						field.set(t, obj);
-					}
+					field.set(t, obj);
 				}
 				list.add(t);
 			}

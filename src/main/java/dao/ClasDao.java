@@ -9,6 +9,8 @@ import model.Clas;
  * @authorEmail 1076030424@qq.com
  */
 public interface ClasDao {
+	//分页查询
+	public List<Clas> queryPageClasses(Integer rows, Integer page, String dimText);
 	public int insert(Clas clas);
 	public int delete(int id);
 	public int update(Clas clas);

@@ -35,14 +35,36 @@ public class ClasDaoimpl extends BaseDao<Clas> implements ClasDao {
 	@Override
 	public List<Clas> queryAll() {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `class_pk_id` id,`class_name` className FROM `tb_class`";
+		String sql = "SELECT `class_pk_id` id,"
+				+ "`class_name` className "
+				+ "FROM `tb_class`";
 		return queryAll(connect,sql);
 	}
 	@Override
 	public Clas queryOne(int id) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `class_pk_id` id,`class_name` className FROM `tb_class` where `class_pk_id` = ?";
+		String sql = "SELECT `class_pk_id` id,"
+				+ "`class_name` className "
+				+ "FROM `tb_class` where `class_pk_id` = ?";
 		return super.queryOne(connect, sql,id);
+	}
+
+	@Override
+	public List<Clas> queryPageClasses(Integer rows, Integer page, String dimText) {
+		Connection connect = JDBCUtils.getConnection();
+		String sql = "SELECT `class_pk_id` id,"
+				+ "`class_name` className "
+				+ "FROM `tb_class` ";
+		int startIndex = (page-1)*rows;
+		StringBuffer str= new StringBuffer();
+		str.append(sql);
+		if(dimText == null || "".equals(dimText)) {
+			str.append("LIMIT ?,?");
+		return queryPage(connect,str.toString(),startIndex,rows);
+	}else{
+		str.append("WHERE `class_name` LIKE ? LIMIT ?,?");
+		return queryPage(connect,str.toString(),"%"+dimText+"%",startIndex,rows);
+	}
 	}
 
 

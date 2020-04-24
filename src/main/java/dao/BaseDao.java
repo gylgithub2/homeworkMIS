@@ -32,6 +32,13 @@ public  class BaseDao<T> {
 	public int insert(Connection connect,String sql,Object...args) {
 		return JDBCUtils.update(connect, sql, args);
 	}
+	public T login(Connection connect,String sql,Object...args) {
+		List<T> list = JDBCUtils.query(connect, sql, clazz, args);
+		if(list.size()<=0) {
+			return null;
+		}
+		return list.get(0);
+	}
 	public T queryOne(Connection connect,String sql,Object...args) {
 		List<T> list = JDBCUtils.query(connect, sql, clazz, args); 
 		if(list.size()<=0) {
@@ -40,6 +47,9 @@ public  class BaseDao<T> {
 		return list.get(0);
 	}
 	public List<T> queryAll(Connection connect,String sql,Object...args) {
+		return JDBCUtils.query(connect, sql, clazz, args);
+	}
+	public List<T> queryPage(Connection connect,String sql,Object...args) {
 		return JDBCUtils.query(connect, sql, clazz, args);
 	}
 }

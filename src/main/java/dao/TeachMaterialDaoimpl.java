@@ -18,7 +18,7 @@ public class TeachMaterialDaoimpl extends BaseDao<TeachMaterial> implements Teac
 		String sql = "INSERT INTO `tb_teachmaterial`(`teach_material_pk_id`,`headline`,`material_content`,`material_path`,`material_name`,`update`) VALUES(?,?,?,?,?,?)";
 		return update(connect, sql, teachMaterial.getId(), teachMaterial.getHeadline(),
 				teachMaterial.getMaterialContent(), teachMaterial.getMaterrialPath(), teachMaterial.getMaterialName(),
-				teachMaterial.getUpDate());
+				teachMaterial.getUploadDate());
 
 	}
 
@@ -35,7 +35,7 @@ public class TeachMaterialDaoimpl extends BaseDao<TeachMaterial> implements Teac
 		Connection connect = JDBCUtils.getConnection();
 		String sql = "UPDATE  `tb_teachmaterial` SET `headline` = ?,`material_content` = ?,`material_path` = ?,`material_name` = ?,`update` = ? WHERE `teach_material_pk_id` = ?";
 		return update(connect, sql, teachMaterial.getHeadline(), teachMaterial.getMaterialContent(),
-				teachMaterial.getMaterrialPath(), teachMaterial.getMaterialName(), teachMaterial.getUpDate(),
+				teachMaterial.getMaterrialPath(), teachMaterial.getMaterialName(), teachMaterial.getUploadDate(),
 				teachMaterial.getId());
 
 	}
@@ -43,7 +43,12 @@ public class TeachMaterialDaoimpl extends BaseDao<TeachMaterial> implements Teac
 	@Override
 	public List<TeachMaterial> queryAll() {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `teach_material_pk_id` id,`headline` headline,`material_content` materialContent,`material_path` materialPath,`material_name` materialName,`update` upDate FROM `tb_teachmaterial`";
+		String sql = "SELECT `teach_material_pk_id` id,"
+				+ "`headline` headline,"
+				+ "`material_content` materialContent,"
+				+ "`material_path` materialPath,"
+				+ "`material_name` materialName,"
+				+ "`update` uploadDate FROM `tb_teachmaterial`";
 		return queryAll(connect, sql);
 
 	}
@@ -51,8 +56,23 @@ public class TeachMaterialDaoimpl extends BaseDao<TeachMaterial> implements Teac
 	@Override
 	public TeachMaterial queryOne(int id) {
 		Connection connect = JDBCUtils.getConnection();
-		String sql = "SELECT `teach_material_pk_id` id,`headline` headline,`material_content` materialContent,`material_path` materialPath,`material_name` materialName,`update` upDate FROM `tb_teachmaterial` where `teach_material_pk_id`=?";
+		String sql = "SELECT `teach_material_pk_id` id,"
+				+ "`headline` headline,"
+				+ "`material_content` materialContent,"
+				+ "`material_path` materialPath,`material_name` materialName,`update` uploadDate FROM `tb_teachmaterial` where `teach_material_pk_id`=?";
 		return super.queryOne(connect, sql, id);
 
+	}
+
+	@Override
+	public List<TeachMaterial> queryPageTeachMaterials(Integer rows, Integer page) {
+		Connection connect = JDBCUtils.getConnection();
+		int startIndex = (page-1)*rows;
+		String sql = "SELECT `teach_material_pk_id` id,"
+				+ "`headline` headline,"
+				+ "`material_content` materialContent,"
+				+ "`material_path` materialPath,`material_name` materialName,"
+				+ "`update` uploadDate FROM `tb_teachmaterial` LIMIT ?,?";
+		return queryPage(connect,sql,startIndex,rows);
 	}
 }
